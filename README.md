@@ -37,6 +37,17 @@ Commands:
   help [command]  display help for command
 ```
 
+## Install
+
+Assuming that yarn and nodejs >= 14.x are installed, execute the following
+
+```bash
+git clone https://github.com/tech-bureau-jp/mijin-catapult-tools.git
+cd mijin-catapult-tools
+yarn && yarn build
+sudo npm install -g
+```
+
 ## Account Generate
 
 ```bash
