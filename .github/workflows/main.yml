@@ -23,9 +23,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: install packages
         run: yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READ_PACKAGE_TOKEN }}
 
       - name: build
         run: yarn build:dev
