@@ -1,6 +1,6 @@
 {
   "name": "@tech-bureau-jp/mijin-catapult-tools",
-  "version": "0.0.1-2022011104",
+  "version": "0.0.1",
   "description": "This tool is for easy operation of mijin Catapult(v.2)",
   "private": false,
   "main": "dist/main.js",

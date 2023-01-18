@@ -37,6 +37,14 @@ Commands:
   help [command]  display help for command
 ```
 
+## Document
+
+Operating instructions are provided in the Deployment Guide.
+
+<https://aws.mijin.io/deployment/en/tech/operations/new_create_account.html>
+
+<https://aws.mijin.io/deployment/en/deploy/aws/aws_tips_new_move_currency.html>
+
 ## Install
 
 Assuming that yarn and nodejs >= 14.x are installed, execute the following
