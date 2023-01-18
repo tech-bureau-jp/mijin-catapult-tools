@@ -1,5 +1,5 @@
 {
-  "name": "@tech-bureau/mijin-catapult-tools",
+  "name": "@tech-bureau-jp/mijin-catapult-tools",
   "version": "0.0.1-2022011104",
   "description": "This tool is for easy operation of mijin Catapult(v.2)",
   "private": false,
@@ -18,8 +18,13 @@
     "type": "git",
     "url": "git+https://github.com/tech-bureau-jp/mijin-catapult-tools.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "keywords": [
-    "mijin"
+    "mijin",
+    "catapult",
+    "symbol"
   ],
   "author": "Techbureau, corp.",
   "license": "MIT",
