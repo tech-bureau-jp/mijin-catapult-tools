@@ -1,5 +1,5 @@
 import AccountServices from '../../service/AccountServices'
-import { NetworkType, RepositoryFactoryHttp } from '@tech-bureau-jp/symbol-sdk'
+import { NetworkType, RepositoryFactoryHttp } from '@tech-bureau/symbol-sdk'
 
 const config = {
   url: 'http://localhost:3000',

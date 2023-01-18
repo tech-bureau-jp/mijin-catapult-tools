@@ -601,10 +601,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tech-bureau-jp/symbol-sdk@^2.0.3-comsa-2022110201":
-  version "2.0.3-comsa-2022110201"
-  resolved "https://npm.pkg.github.com/download/@tech-bureau-jp/symbol-sdk/2.0.3-comsa-2022110201/d9f3077adbe473ab845ff9fe26a538b2f9771af4#d9f3077adbe473ab845ff9fe26a538b2f9771af4"
-  integrity sha512-THq4O7FfxtVm2W7XO6GKpULviaLKhXeoucysPlRabBOBNqufTpF4XOxZAG9Z5TZI6rbf5ePHf0MSe2/qkt4Tug==
+"@tech-bureau/symbol-sdk@^2.0.3-comsa-2023011801":
+  version "2.0.3-comsa-2023011801"
+  resolved "https://registry.npmjs.org/@tech-bureau/symbol-sdk/-/symbol-sdk-2.0.3-comsa-2023011801.tgz#124b7472d87ed93b488ea438edbe9462bf93dbc8"
+  integrity sha512-U1KXXGhATlU2CYc6QQ0KDZ0XcmRDRzEpZeTjlS/7DM76WRQydhqv8p4VECmrY9fkJ9+joKsFNJqyIA3VV7IJ0A==
   dependencies:
     "@js-joda/core" "^3.2.0"
     catbuffer-typescript "^1.0.2"

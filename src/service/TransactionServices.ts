@@ -34,7 +34,7 @@ import {
   TransactionStatusHttp,
   TransactionStatus,
   Transaction,
-} from '@tech-bureau-jp/symbol-sdk'
+} from '@tech-bureau/symbol-sdk'
 import { ChronoUnit } from '@js-joda/core'
 import { firstValueFrom } from 'rxjs'
 import CreateAccount from './AccountServices'

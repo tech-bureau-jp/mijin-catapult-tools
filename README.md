@@ -50,10 +50,8 @@ Operating instructions are provided in the Deployment Guide.
 Assuming that yarn and nodejs >= 14.x are installed, execute the following
 
 ```bash
-git clone https://github.com/tech-bureau-jp/mijin-catapult-tools.git
-cd mijin-catapult-tools
-yarn && yarn build
-sudo npm install -g
+yarn global add  @tech-bureau/mijin-catapult-tools
+echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
 
 ## Account Generate

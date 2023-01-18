@@ -16,7 +16,7 @@
 import * as noble from '@noble/ed25519'
 import { existsSync, lstatSync, readdirSync, readFileSync } from 'fs'
 import { join } from 'path'
-import { Convert, Crypto } from '@tech-bureau-jp/symbol-sdk'
+import { Convert, Crypto } from '@tech-bureau/symbol-sdk'
 import * as nacl from 'tweetnacl'
 
 export interface KeyPair {

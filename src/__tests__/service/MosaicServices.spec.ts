@@ -1,6 +1,6 @@
 import MosaicServices from '../../service/MosaicServices'
 import AccountServices from '../../service/AccountServices'
-import { Mosaic, NetworkType } from '@tech-bureau-jp/symbol-sdk'
+import { Mosaic, NetworkType } from '@tech-bureau/symbol-sdk'
 
 const config = {
   url: 'http://localhost:3000',

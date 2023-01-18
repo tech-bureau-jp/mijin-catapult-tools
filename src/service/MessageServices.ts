@@ -1,4 +1,4 @@
-import { EncryptedMessage, Message, PlainMessage, PublicAccount, RawMessage } from '@tech-bureau-jp/symbol-sdk'
+import { EncryptedMessage, Message, PlainMessage, PublicAccount, RawMessage } from '@tech-bureau/symbol-sdk'
 
 export default class MessageServices {
   constructor() {}

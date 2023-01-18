@@ -8,7 +8,7 @@ import {
   MosaicFlags,
   MosaicRepository,
   MosaicInfo,
-} from '@tech-bureau-jp/symbol-sdk'
+} from '@tech-bureau/symbol-sdk'
 import { Observable, firstValueFrom } from 'rxjs'
 
 export default class MosaicServices {

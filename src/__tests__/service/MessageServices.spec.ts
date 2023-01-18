@@ -1,6 +1,6 @@
 import MessageServices from '../../service/MessageServices'
 import AccountServices from '../../service/AccountServices'
-import { NetworkType } from '@tech-bureau-jp/symbol-sdk'
+import { NetworkType } from '@tech-bureau/symbol-sdk'
 
 const config = {
   url: 'http://localhost:3000',

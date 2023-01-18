@@ -1,12 +1,11 @@
 {
-  "name": "@tech-bureau-jp/mijin-catapult-tools",
-  "version": "0.0.1",
+  "name": "@tech-bureau/mijin-catapult-tools",
+  "version": "0.0.6",
   "description": "This tool is for easy operation of mijin Catapult(v.2)",
   "private": false,
   "main": "dist/main.js",
   "scripts": {
     "test": "jest",
-    "postinstall": "set -eux; if [ ! -f ./node_modules/@tech-bureau-jp/symbol-sdk/dist/index.js ]; then cd ./node_modules/@tech-bureau-jp/symbol-sdk/; npm i; npm run build; rm -rf node_modules; fi",
     "build:dev": "rm -rf ./dist && NODE_ENV=dev webpack --mode development",
     "build:tsc": "rm -rf ./dist && tsc -b",
     "build": "rm -rf ./dist && NODE_ENV=prod webpack --mode production"
@@ -17,9 +16,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tech-bureau-jp/mijin-catapult-tools.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "mijin",
@@ -34,7 +30,7 @@
   "homepage": "https://github.com/tech-bureau-jp/mijin-catapult-tools#readme",
   "dependencies": {
     "@noble/ed25519": "^1.7.1",
-    "@tech-bureau-jp/symbol-sdk": "^2.0.3-comsa-2022110201",
+    "@tech-bureau/symbol-sdk": "^2.0.3-comsa-2023011801",
     "commander": "9.5.0",
     "config": "^3.3.4",
     "js-sha3": "git+https://github.com/Propine/js-sha3.git",

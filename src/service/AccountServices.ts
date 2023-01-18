@@ -6,7 +6,7 @@ import {
   NetworkCurrencies,
   NetworkType,
   PublicAccount,
-} from '@tech-bureau-jp/symbol-sdk'
+} from '@tech-bureau/symbol-sdk'
 import { Observable, firstValueFrom } from 'rxjs'
 
 export default class AccountServices {

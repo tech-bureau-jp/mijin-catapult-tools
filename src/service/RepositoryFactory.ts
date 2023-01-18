@@ -6,7 +6,7 @@ import {
   NetworkType,
   RepositoryFactoryHttp,
   TransactionFees,
-} from '@tech-bureau-jp/symbol-sdk'
+} from '@tech-bureau/symbol-sdk'
 import { firstValueFrom } from 'rxjs'
 
 let networkType: NetworkType
