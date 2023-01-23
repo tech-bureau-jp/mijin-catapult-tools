@@ -1,0 +1,37 @@
+name: CI with Node.js and TypeScript
+
+on:
+  pull_request:
+    branches:
+      - main
+      - '!staging'
+      - '!dev'
+      - '!prod'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: install packages
+        run: yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READ_PACKAGE_TOKEN }}
+
+      - name: build
+        run: yarn build:dev
+
+      - name: test
+        run: yarn test
