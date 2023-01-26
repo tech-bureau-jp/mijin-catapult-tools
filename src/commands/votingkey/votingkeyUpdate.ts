@@ -10,6 +10,7 @@ program
   .option('-s, --startepoch <72>', 'Specify the input of Voting Start Epoch', '72')
   .option('-e, --endepoch <1>', 'Specify the input of Voting Stop Epoch', '26280')
   .option('-d, --savedir <dir>', 'Specify the input of Save Voting Key Directory', 'current')
+  .option('-p, --privatekey <privateKey>', 'Specify the input of Voting Account Private Key')
   .action(voting)
 
 export default program

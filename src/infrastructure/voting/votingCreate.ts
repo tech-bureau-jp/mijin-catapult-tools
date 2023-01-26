@@ -8,17 +8,12 @@ import userEnv from 'userEnv'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IVotingCreateOption) => {
-  const { url, readfile, startepoch, endepoch, savedir } = option
+  const { url, readfile, startepoch, endepoch, savedir, privatekey } = option
 
   let configFile
 
   if (readfile && (await checkFile(readfile))) {
     configFile = await readConfig(readfile)
-  }
-
-  if (!configFile) {
-    logger.error('Set Read Config(-r config.json)')
-    return
   }
 
   const mijinUrl = url ? url : configFile ? configFile.url : undefined
@@ -34,21 +29,34 @@ export default async (option: IVotingCreateOption) => {
     repo = new RepositoryFactory(mijinUrl)
     await repo.init()
   } catch (error) {
-    logger.error(`Please specify a valid URL: ${mijinUrl}`)
-    return
+    logger.error(`No URL mode: ${mijinUrl}`)
+    repo = undefined
   }
 
   // (VotingSetGroup(180) * maxVotingKeyLifetime(26280)) / ( 60 / blockGenerationTargetTime * 60 * 24)
   // 180 * 26280 / (60 /15 * 60 * 24) = 821日
-  const networkProperties = repo.getNetworkProperties()
+  const networkProperties = repo ? repo.getNetworkProperties() : undefined
 
   const votingSetGroup = userEnv.mijin.voting.votingSetGroup
-  const maxVotingKeyLifetime = Number(networkProperties.chain.maxVotingKeyLifetime)
-  const blockGenerationTargetTime = Number(networkProperties.chain.blockGenerationTargetTime?.replace('s', ''))
+  const maxVotingKeyLifetime = networkProperties
+    ? Number(networkProperties.chain.maxVotingKeyLifetime)
+    : endepoch
+    ? Number(endepoch)
+    : userEnv.mijin.voting.endEpoch
+  const blockGenerationTargetTime = networkProperties
+    ? Number(networkProperties.chain.blockGenerationTargetTime?.replace('s', ''))
+    : null
 
   const votingUtil = new VotingUtils()
 
   const dir = savedir === 'current' ? process.cwd() : savedir
+
+  const votingPrivateKey = privatekey ? privatekey : configFile ? configFile.keylink.voting.privateKey : undefined
+
+  if (!votingPrivateKey) {
+    logger.error('Not Found Voting Private Key')
+    return
+  }
 
   let votingFiles
   let votingMaxEpoch
@@ -57,9 +65,13 @@ export default async (option: IVotingCreateOption) => {
 
   logger.info('Start Voting Key Create...')
 
-  votingMaxEpoch = Math.max(repo.getEinalizationEpoch(), Number(startepoch), 72)
+  votingMaxEpoch = repo
+    ? Math.max(repo.getEinalizationEpoch(), startepoch ? Number(startepoch) : 0, 72)
+    : startepoch
+    ? Number(startepoch)
+    : userEnv.mijin.voting.startEpoch
   votingStartEpoch = votingMaxEpoch
-  votingEndEpoch = votingMaxEpoch + maxVotingKeyLifetime
+  votingEndEpoch = repo ? votingMaxEpoch + maxVotingKeyLifetime : maxVotingKeyLifetime
 
   logger.info(`votingSetGroup: ${votingSetGroup}`)
   logger.info(`votingMaxEpoch: ${votingMaxEpoch}`)
@@ -67,11 +79,7 @@ export default async (option: IVotingCreateOption) => {
   logger.info(`votingEndEpoch: ${votingEndEpoch}`)
   logger.info(`blockGenerationTargetTime: ${blockGenerationTargetTime}`)
 
-  const votingfile = await votingUtil.createVotingFile(
-    configFile.keylink.voting.privateKey,
-    votingStartEpoch,
-    votingEndEpoch
-  )
+  const votingfile = await votingUtil.createVotingFile(votingPrivateKey, votingStartEpoch, votingEndEpoch)
 
   if (savedir !== 'current' && !(await checkDir(dir))) {
     await createDir(dir)
