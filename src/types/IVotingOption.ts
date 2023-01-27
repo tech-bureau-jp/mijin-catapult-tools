@@ -1,9 +1,10 @@
 export interface IVotingCreateOption {
   url?: string
   readfile?: string
-  startepoch: string
-  endepoch: string
+  startepoch?: string
+  endepoch?: string
   savedir: string
+  privatekey?: string
 }
 
 export interface IVotingInfoOption {
@@ -18,4 +19,5 @@ export interface IVotingUpdateOption {
   startepoch: string
   endepoch: string
   savedir: string
+  privatekey?: string
 }

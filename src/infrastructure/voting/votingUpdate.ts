@@ -8,17 +8,12 @@ import userEnv from 'userEnv'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IVotingUpdateOption) => {
-  const { url, readfile, savedir } = option
+  const { url, readfile, savedir, privatekey } = option
 
   let configFile
 
   if (readfile && (await checkFile(readfile))) {
     configFile = await readConfig(readfile)
-  }
-
-  if (!configFile) {
-    logger.error('Set Read Config(-r config.json)')
-    return
   }
 
   const mijinUrl = url ? url : configFile ? configFile.url : undefined
@@ -50,6 +45,13 @@ export default async (option: IVotingUpdateOption) => {
 
   const dir = savedir === 'current' ? process.cwd() : savedir
 
+  const votingPrivateKey = privatekey ? privatekey : configFile ? configFile.keylink.voting.privateKey : undefined
+
+  if (!votingPrivateKey) {
+    logger.error('Not Found Voting Private Key')
+    return
+  }
+
   let votingFiles
   let votingMaxEpoch
   let votingStartEpoch
@@ -75,11 +77,7 @@ export default async (option: IVotingUpdateOption) => {
   logger.info(`votingEndEpoch: ${votingEndEpoch}`)
   logger.info(`blockGenerationTargetTime: ${blockGenerationTargetTime}`)
 
-  const newVotingfile = await votingUtil.createVotingFile(
-    configFile.keylink.voting.privateKey,
-    votingStartEpoch,
-    votingEndEpoch
-  )
+  const newVotingfile = await votingUtil.createVotingFile(votingPrivateKey, votingStartEpoch, votingEndEpoch)
 
   const votingFileindex = votingFiles.length + 1
 
