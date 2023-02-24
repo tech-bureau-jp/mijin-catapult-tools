@@ -94,14 +94,19 @@ export default async (option: IMosaicCreateOption) => {
 
   const mosaicNonce = MosaicServices.createMosaicNonce()
   const mosaicId = MosaicServices.createMosaicId(mosaicNonce, createAccount.address)
-  const mosaicFlag = MosaicServices.createMosaicFlags(supplymutable, transferable, restrictable, revokable)
+  const mosaicFlag = MosaicServices.createMosaicFlags(
+    JSON.parse(supplymutable),
+    JSON.parse(transferable),
+    JSON.parse(restrictable),
+    JSON.parse(revokable)
+  )
 
   const mosaicSupply = Number(Number(supply).toFixed(Number(divisibility))) * Math.pow(10, Number(divisibility))
 
   logger.info(`Mosaic Owener Account: ${createAccount.address.plain()}`)
   logger.info(`MosaicId: ${mosaicId.id.toHex()}`)
   logger.info(
-    `Mosaic Flags: supplymutable:${supplymutable}, transferable:${transferable}, restrictable:${restrictable}, revokable:${revokable}`
+    `Mosaic Flags: supplymutable:${supplymutable}, transferable:${transferable}, restrictable:${restrictable}, revokable:${revokable}, mosaicFlag: ${mosaicFlag.getValue()}`
   )
   logger.info(`Mosaic Supply: divisibility:${divisibility}, supply:${mosaicSupply}`)
 
