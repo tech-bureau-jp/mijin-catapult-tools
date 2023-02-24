@@ -50,8 +50,15 @@ describe('start mosaic test', () => {
     const nonce = MosaicServices.createMosaicNonce()
     const address = AccountServices.createAddress(config.workAccount.address)
     const mosaicId = MosaicServices.createMosaicId(nonce, address)
+    const mosaicFlag = MosaicServices.createMosaicFlags(
+      JSON.parse('false'),
+      JSON.parse('true'),
+      JSON.parse('true'),
+      JSON.parse('false')
+    )
 
     expect(mosaicId).toBeDefined()
+    expect(mosaicFlag.getValue()).toEqual(6)
   })
 
   it('Create Mosaic function', async () => {

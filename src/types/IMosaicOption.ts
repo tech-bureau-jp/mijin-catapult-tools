@@ -3,10 +3,10 @@ export interface IMosaicCreateOption {
   url?: string
   supply: string
   divisibility: string
-  supplymutable: boolean
-  transferable: boolean
-  restrictable: boolean
-  revokable: boolean
+  supplymutable: string
+  transferable: string
+  restrictable: string
+  revokable: string
   readfile?: string
   privatekey?: string
 }
