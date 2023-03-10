@@ -12,7 +12,13 @@ This tool is for easy operation of mijin Catapult(v.2)
   * Transaction
   * Mosaic
     * Create
-    * info
+    * Info
+  * Namespace
+    * Create Root
+    * Create Sub
+    * Link Mosaic
+    * Link Address
+    * Info
 * Voting
   * Create
   * Info
@@ -571,6 +577,64 @@ $ mijin-catapult-tools transaction mosaic create -r config.json -o work -s 1000 
 2023-01-16T06:28:34.464Z [info] : End Aggregate Transaction
 2023-01-16T06:28:34.464Z [info] : http://localhost:3000/transactionStatus/733BA25FECEECC334CAD0E4B86F80676661EA34DC1781E205C0034536A5A330A
 2023-01-16T06:28:34.464Z [info] : http://localhost:3000/transactions/confirmed/733BA25FECEECC334CAD0E4B86F80676661EA34DC1781E205C0034536A5A330A
+```
+
+## Namespace
+
+```bash
+$ mijin-catapult-tools transaction namespace -h
+Usage: mijin-catapult-tools transaction namespace [options] [command]
+
+Namespace Transaction Announce or Info
+
+Options:
+  -h, --help              display help for command
+
+Commands:
+  create-root [options]   Create Root Namespace and Announce Mosaic Transaction
+  create-sub [options]    Create Sub Namespace and Announce Mosaic Transaction
+  link-mosaic [options]   Link Mosaic and Announce Transaction
+  link-address [options]  Link Address and Announce Transaction
+  info [options]          Get Namespace Info
+  help [command]          display help for command
+```
+
+### Create Root Namespace (Owner work Account)
+
+Namespace Name: test
+Duration: 1000
+
+```bash
+$ mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000
+2023-03-10T06:11:01.298Z [info] : mijin URL: http://localhost:3000
+2023-03-10T06:11:01.299Z [info] : Network: 96
+2023-03-10T06:11:01.300Z [info] : Create Root Namespace...
+2023-03-10T06:11:01.345Z [info] : Root Namespace Owner Account: MDLEKG5MKKAPFBM3XWZKYQEDYRJO67MUJXFDP6I
+2023-03-10T06:11:01.346Z [info] : Namespace Name: test
+2023-03-10T06:11:01.348Z [info] : Namespace Transaction: {"transaction":{"type":16718,"network":96,"version":1,"maxFee":"0","deadline":"118141861343","signature":"","registrationType":0,"name":"test","id":"D401054C1965C26E","duration":"1000"}}
+2023-03-10T06:11:01.378Z [info] : Transaction Fee: 0
+2023-03-10T06:11:01.378Z [info] : Namespace Rental Fee Per Block: 1
+2023-03-10T06:11:01.378Z [info] : Start Announce Transaction...
+2023-03-10T06:11:06.415Z [info] : End Transaction
+2023-03-10T06:11:06.415Z [info] : http://localhost:3000/transactionStatus/57275DF8349C3FB582BA5B1B854FA8C270C467B8A48EB9B9E24EC6F3F7A1786B
+2023-03-10T06:11:06.415Z [info] : http://localhost:3000/transactions/confirmed/57275DF8349C3FB582BA5B1B854FA8C270C467B8A48EB9B9E24EC6F3F7A1786B
+```
+
+### Namespace Info
+
+Namespace Name: test
+
+```bash
+$ mijin-catapult-tools transaction namespace info -r config.json -n test
+2023-03-10T06:13:34.668Z [info] : mijin URL: http://localhost:3000
+2023-03-10T06:13:34.669Z [info] : Network: 96
+2023-03-10T06:13:34.670Z [info] : Namespace Id: test
+2023-03-10T06:13:34.749Z [info] : Namespace Info: {
+  "active": true,
+  "ownerAddress": "MDLEKG5MKKAPFBM3XWZKYQEDYRJO67MUJXFDP6I",
+  "namespaceId": "D401054C1965C26E",
+  "parentId": "0000000000000000"
+}
 ```
 
 ## Create Votingkey Dat file(for main Account)
