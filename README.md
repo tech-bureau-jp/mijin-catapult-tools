@@ -599,6 +599,17 @@ Commands:
   help [command]          display help for command
 ```
 
+### Namespace Example Commands
+
+``` bash
+$ mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000
+$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub -pn test
+$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub2 -pn test
+$ mijin-catapult-tools transaction namespace link-mosaic -r config.json -o work -n test.sub -m 287CD558128F6C53
+$ mijin-catapult-tools transaction namespace link-address -r config.json -o work -n test.sub2 -a MDLEKG5MKKAPFBM3XWZKYQEDYRJO67MUJXFDP6I
+$ mijin-catapult-tools transaction namespace info -r config.json -n test
+```
+
 ### Create Root Namespace (Owner work Account)
 
 Namespace Name: test
