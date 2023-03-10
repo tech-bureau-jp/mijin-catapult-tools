@@ -8,7 +8,7 @@ import transaction from './commands/transaction/transaction'
   program
     .name('mijin-catapult-tools')
     .description('This tool allows you to easily operate mijin Catapult')
-    .version('0.1.6')
+    .version('0.1.7')
 
   program.addCommand(account())
   program.addCommand(voting())
