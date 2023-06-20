@@ -11,6 +11,7 @@
     "newLine": "lf",
     "sourceMap": true,
     "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
     "paths": {
       "userEnv": ["./.env/dev"]
     },
