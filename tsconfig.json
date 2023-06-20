@@ -13,7 +13,7 @@
     "strictPropertyInitialization": false,
     "paths": {
       "userEnv": ["./.env/dev"]
-    }, 
+    },
     "esModuleInterop": true,
     "moduleResolution": "node",
     "outDir": "./dist",

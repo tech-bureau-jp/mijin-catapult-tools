@@ -160,7 +160,7 @@ export default async (option: ITransferOption) => {
     repo.createLitener(),
     repo.createTransactionRepository(),
     repo.createReceiptRepository()
-  ).catch(error => error)
+  ).catch((error) => error)
 
   if (announce instanceof Error) {
     logger.error(`Transfer Announce ${announce}`)

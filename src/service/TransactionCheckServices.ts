@@ -231,10 +231,10 @@ export default class TransactionCheckServicesServices {
           newRestrictionType: Constants.MosaicRestrictionType[mosaicGlobalRestrictionTx.newRestrictionType],
         },
       }
-    // } else if (tx.type === TransactionType.ACCOUNT_KEY_LINK) {
-    // } else if (tx.type === TransactionType.NODE_KEY_LINK) {
-    // } else if (tx.type === TransactionType.VOTING_KEY_LINK) {
-    // } else if (tx.type === TransactionType.VRF_KEY_LINK) {
+      // } else if (tx.type === TransactionType.ACCOUNT_KEY_LINK) {
+      // } else if (tx.type === TransactionType.NODE_KEY_LINK) {
+      // } else if (tx.type === TransactionType.VOTING_KEY_LINK) {
+      // } else if (tx.type === TransactionType.VRF_KEY_LINK) {
     } else {
       return {
         ...defaultTx,

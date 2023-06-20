@@ -71,10 +71,13 @@ export default async (option: ITransactionStatusOption) => {
       logger.info(`Block Info: height: ${blockInfo.height.compact()} date: ${blockDate}`)
     }
 
-    const getTx = await TransactionServices.getTransaction(repo.createTransactionRepository(), transactionhash, statusTx.group)
+    const getTx = await TransactionServices.getTransaction(
+      repo.createTransactionRepository(),
+      transactionhash,
+      statusTx.group
+    )
 
     let transactions = [] as TransactionInfoDto[]
-
 
     if (TransactionCheckServices.aggregateCheck(getTx)) {
       const aggregateTx = getTx as AggregateTransaction

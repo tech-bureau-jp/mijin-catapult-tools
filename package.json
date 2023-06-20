@@ -8,7 +8,9 @@
     "test": "jest",
     "build:dev": "rm -rf ./dist && NODE_ENV=dev webpack --mode development",
     "build:tsc": "rm -rf ./dist && tsc -b",
-    "build": "rm -rf ./dist && NODE_ENV=prod webpack --mode production"
+    "build": "rm -rf ./dist && NODE_ENV=prod webpack --mode production",
+    "format:check": "prettier -c './**/*.{ts,tsx,js,json}'",
+    "format:exec": "prettier --write -c './**/*.{ts,tsx,js,json}'"
   },
   "bin": {
     "mijin-catapult-tools": "./bin/mijin-catapult-tools.js"
