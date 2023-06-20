@@ -34,6 +34,8 @@ import {
   TransactionStatusHttp,
   TransactionStatus,
   Transaction,
+  BlockHttp,
+  BlockInfo,
 } from '@tech-bureau/symbol-sdk'
 import { ChronoUnit } from '@js-joda/core'
 import { firstValueFrom } from 'rxjs'
@@ -59,6 +61,11 @@ export default class TransactionServices {
           : TransactionGroup.Unconfirmed
       )
     )
+  }
+
+  static async getBlock(url: string, height: UInt64): Promise<BlockInfo> {
+    const blockHttp = new BlockHttp(url)
+    return await firstValueFrom(blockHttp.getBlockByHeight(height))
   }
 
   static async announceCosign(
