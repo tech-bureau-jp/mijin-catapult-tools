@@ -8,6 +8,7 @@ program
   .option('-u, --url <mijinCatapultURL>', 'Specify the input of mijin URL')
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File', 'config.json')
   .option('-t, --transactionhash <transactionHash>', 'Specify the input of Transaction Hash')
+  .option('-p, --privatekey <privateKey>', 'Specify the input of Mosaic Owner Account Private Key')
   .action(transactionStatus)
 
 export default program
