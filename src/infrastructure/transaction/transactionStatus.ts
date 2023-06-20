@@ -12,7 +12,7 @@ import AccountServices from '../../service/AccountServices'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: ITransactionStatusOption) => {
-  const { url, readfile, transactionhash, privatekey } = option
+  const { url, readfile, transactionhash, privatekey, bod } = option
 
   let configFile
 
@@ -31,7 +31,7 @@ export default async (option: ITransactionStatusOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return
@@ -51,7 +51,10 @@ export default async (option: ITransactionStatusOption) => {
   try {
     const account = privatekey ? AccountServices.createAccount(privatekey, networkType) : undefined
 
-    const statusTx = await TransactionServices.getTransactionStatus(mijinUrl, transactionhash)
+    const statusTx = await TransactionServices.getTransactionStatus(
+      repo.createTransactionStatusRepository(),
+      transactionhash
+    )
 
     if (!statusTx.height) {
       logger.error(`Block not found.`)
@@ -63,12 +66,12 @@ export default async (option: ITransactionStatusOption) => {
 
     // When Confirmed, get Block date
     if (statusTx.group === 'confirmed') {
-      const blockInfo = await TransactionServices.getBlock(mijinUrl, statusTx.height)
+      const blockInfo = await TransactionServices.getBlock(repo.createBlockRepository(), statusTx.height)
       const blockDate = new Date(blockInfo.timestamp.compact() + epoch * 1000).toLocaleString()
       logger.info(`Block Info: height: ${blockInfo.height.compact()} date: ${blockDate}`)
     }
 
-    const getTx = await TransactionServices.getTransaction(mijinUrl, transactionhash, statusTx.group)
+    const getTx = await TransactionServices.getTransaction(repo.createTransactionRepository(), transactionhash, statusTx.group)
 
     let transactions = [] as TransactionInfoDto[]
 

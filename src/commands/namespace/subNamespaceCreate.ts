@@ -11,6 +11,7 @@ program
   .option('-pn, --parent-name <parent-name>', 'Specify the input of Namespace Parent Name')
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File')
   .option('-p, --privatekey <privateKey>', 'Specify the input of Mosaic Owner Account Private Key')
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(subNamespaceCreate)
 
 export default program

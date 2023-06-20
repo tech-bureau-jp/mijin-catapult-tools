@@ -3,4 +3,5 @@ export interface ITransactionStatusOption {
   transactionhash: string
   readfile?: string
   privatekey?: string
+  bod: boolean
 }

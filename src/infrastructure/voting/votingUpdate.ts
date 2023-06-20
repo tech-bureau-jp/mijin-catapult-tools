@@ -8,7 +8,7 @@ import userEnv from 'userEnv'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IVotingUpdateOption) => {
-  const { url, readfile, savedir, privatekey } = option
+  const { url, readfile, savedir, privatekey, bod } = option
 
   let configFile
 
@@ -27,7 +27,7 @@ export default async (option: IVotingUpdateOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return

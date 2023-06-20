@@ -6,6 +6,7 @@ export interface IAccountGenerateOption {
   certsdir?: string
   privatekey?: string
   service: boolean
+  bod: boolean
 }
 
 export interface IAccountInfoOption {
@@ -13,4 +14,5 @@ export interface IAccountInfoOption {
   url?: string
   readfile?: string
   address?: string
+  bod: boolean
 }

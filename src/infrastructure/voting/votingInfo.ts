@@ -7,7 +7,7 @@ import { readConfig, checkFile } from '../../utils'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IVotingInfoOption) => {
-  const { url, readfile, savedir } = option
+  const { url, readfile, savedir, bod } = option
 
   let configFile
 
@@ -26,7 +26,7 @@ export default async (option: IVotingInfoOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return

@@ -10,7 +10,7 @@ import { readConfig, checkFile } from '../../utils'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: ITransferOption) => {
-  const { url, from, dest, readfile, amount, mosaic, message } = option
+  const { url, from, dest, readfile, amount, mosaic, message, bod } = option
 
   let configFile
 
@@ -29,7 +29,7 @@ export default async (option: ITransferOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return
@@ -160,7 +160,12 @@ export default async (option: ITransferOption) => {
     repo.createLitener(),
     repo.createTransactionRepository(),
     repo.createReceiptRepository()
-  )
+  ).catch(error => error)
+
+  if (announce instanceof Error) {
+    logger.error(`Transfer Announce ${announce}`)
+    return
+  }
 
   logger.info('End Transfer Transaction')
   logger.info(`${mijinUrl}/transactionStatus/${signedTransaction.hash}`)

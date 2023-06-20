@@ -14,6 +14,7 @@ program
   .option('-a, --address <privateKey>', 'Specify the input of Address')
   .option('-m, --message <message>', 'Specify the input of Transaction Message(Plain Only)')
   .option('-s, --service', 'Specify the input Service Mode', false)
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(account)
 
 export default program

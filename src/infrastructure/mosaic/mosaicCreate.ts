@@ -20,6 +20,7 @@ export default async (option: IMosaicCreateOption) => {
     restrictable,
     revokable,
     privatekey,
+    bod,
   } = option
 
   let configFile
@@ -39,7 +40,7 @@ export default async (option: IMosaicCreateOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return
@@ -146,7 +147,12 @@ export default async (option: IMosaicCreateOption) => {
     repo.createLitener(),
     repo.createTransactionRepository(),
     repo.createReceiptRepository()
-  )
+  ).catch((error) => error)
+
+  if (announce instanceof Error) {
+    logger.error(`mosaicCreate Announce ${announce}`)
+    return
+  }
 
   logger.info('End Aggregate Transaction')
   logger.info(`${mijinUrl}/transactionStatus/${signedTransaction.hash}`)
