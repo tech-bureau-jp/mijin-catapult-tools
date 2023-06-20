@@ -10,6 +10,7 @@
     "pretty": true,
     "newLine": "lf",
     "sourceMap": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "userEnv": ["./.env/dev"]
     }, 
