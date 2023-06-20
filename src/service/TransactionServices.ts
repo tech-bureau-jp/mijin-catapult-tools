@@ -6,7 +6,6 @@ import {
   Account,
   CosignatureTransaction,
   TransactionAnnounceResponse,
-  TransactionHttp,
   AccountKeyLinkTransaction,
   LinkAction,
   NodeKeyLinkTransaction,
@@ -31,9 +30,11 @@ import {
   MosaicSupplyChangeTransaction,
   MosaicSupplyChangeAction,
   TransactionGroup,
-  TransactionStatusHttp,
   TransactionStatus,
   Transaction,
+  BlockRepository,
+  BlockInfo,
+  TransactionStatusRepository,
 } from '@tech-bureau/symbol-sdk'
 import { ChronoUnit } from '@js-joda/core'
 import { firstValueFrom } from 'rxjs'
@@ -42,15 +43,20 @@ import CreateAccount from './AccountServices'
 export default class TransactionServices {
   constructor() {}
 
-  static async getTransactionStatus(url: string, transactionId: string): Promise<TransactionStatus> {
-    const transactionStatusHttp = new TransactionStatusHttp(url)
-    return await firstValueFrom(transactionStatusHttp.getTransactionStatus(transactionId))
+  static async getTransactionStatus(
+    transactionRepository: TransactionStatusRepository,
+    transactionId: string
+  ): Promise<TransactionStatus> {
+    return await firstValueFrom(transactionRepository.getTransactionStatus(transactionId))
   }
 
-  static async getTransaction(url: string, transactionId: string, transactionStatus: string): Promise<Transaction> {
-    const transactionHttp = new TransactionHttp(url)
+  static async getTransaction(
+    transactionRepository: TransactionRepository,
+    transactionId: string,
+    transactionStatus: string
+  ): Promise<Transaction> {
     return await firstValueFrom(
-      transactionHttp.getTransaction(
+      transactionRepository.getTransaction(
         transactionId,
         transactionStatus === 'confirmed'
           ? TransactionGroup.Confirmed
@@ -61,14 +67,17 @@ export default class TransactionServices {
     )
   }
 
+  static async getBlock(blockRepository: BlockRepository, height: UInt64): Promise<BlockInfo> {
+    return await firstValueFrom(blockRepository.getBlockByHeight(height))
+  }
+
   static async announceCosign(
-    url: string,
+    transactionRepository: TransactionRepository,
     account: Account,
     transaction: AggregateTransaction
   ): Promise<TransactionAnnounceResponse> {
-    const transactionHttp = new TransactionHttp(url)
     const signdTransaction = account.signCosignatureTransaction(CosignatureTransaction.create(transaction))
-    return await firstValueFrom(transactionHttp.announceAggregateBondedCosignature(signdTransaction))
+    return await firstValueFrom(transactionRepository.announceAggregateBondedCosignature(signdTransaction))
   }
 
   static async announceHashLockAggregateBonded(

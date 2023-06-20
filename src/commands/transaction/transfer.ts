@@ -11,6 +11,7 @@ program
   .option('-m --mosaic <mosaic>', 'Specify the input of Mosaic Id', 'cat.currency')
   .option('-a --amount <amount>', 'Specify the input of transaction type', '0')
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File', 'config.json')
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(transfer)
 
 export default program

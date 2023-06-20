@@ -6,4 +6,5 @@ export interface ITransferOption {
   amount: string
   readfile?: string
   message?: string
+  bod: boolean
 }

@@ -15,6 +15,7 @@ program
   .option('--revokable <revokable>', 'Specify the input of Mosaic Flags option Revokable', 'false')
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File')
   .option('-p, --privatekey <privateKey>', 'Specify the input of Mosaic Owener Account Private Key')
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(mosaic)
 
 export default program

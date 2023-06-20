@@ -8,6 +8,8 @@ import {
   TransactionFees,
 } from '@tech-bureau/symbol-sdk'
 import { firstValueFrom } from 'rxjs'
+import fetchCookie from 'fetch-cookie'
+import { CookieJar } from 'tough-cookie'
 
 let networkType: NetworkType
 let currency: NetworkCurrencies
@@ -21,8 +23,26 @@ let finalizationEpoch: number
 export default class RepositoryFactory {
   constructor(public url: string) {}
 
-  async init() {
-    repo = new RepositoryFactoryHttp(this.url)
+  async init(cookieFlag?: boolean) {
+    if (cookieFlag) {
+      const cookieJar = new CookieJar()
+      const fetchCookieJar = fetchCookie(fetch, cookieJar)
+      await fetchCookieJar(this.url)
+      const cookie = await cookieJar.getCookieString(this.url)
+
+      // Websocket Option(mijin custom sdk)
+      const websocketOptions = {
+        headers: { cookie: cookie },
+      }
+
+      repo = new RepositoryFactoryHttp(this.url, {
+        fetchApi: fetchCookieJar,
+        websocketOptions: websocketOptions,
+      })
+    } else {
+      repo = new RepositoryFactoryHttp(this.url)
+    }
+
     networkType = await firstValueFrom(repo.getNetworkType())
     currency = await firstValueFrom(repo.getCurrencies())
     generationHash = await firstValueFrom(repo.getGenerationHash())
@@ -103,5 +123,9 @@ export default class RepositoryFactory {
 
   createMosaicRepository() {
     return repo.createMosaicRepository()
+  }
+
+  createTransactionStatusRepository() {
+    return repo.createTransactionStatusRepository()
   }
 }

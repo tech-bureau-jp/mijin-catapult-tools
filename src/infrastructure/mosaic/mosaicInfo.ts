@@ -7,7 +7,7 @@ import MosaicServices from '../../service/MosaicServices'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IMosaicInfoOption) => {
-  const { url, readfile, mosaicrawId } = option
+  const { url, readfile, mosaicrawId, bod } = option
 
   let configFile
 
@@ -23,7 +23,7 @@ export default async (option: IMosaicInfoOption) => {
   const mijinUrl = url ? url : configFile ? configFile.url : ''
 
   const repo = new RepositoryFactory(mijinUrl)
-  await repo.init()
+  await repo.init(bod)
 
   const networkType = repo.getNetwork()
   const epoch = repo.getEpoch()

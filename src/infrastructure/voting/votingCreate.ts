@@ -8,7 +8,7 @@ import userEnv from 'userEnv'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IVotingCreateOption) => {
-  const { url, readfile, startepoch, endepoch, savedir, privatekey } = option
+  const { url, readfile, startepoch, endepoch, savedir, privatekey, bod } = option
 
   let configFile
 
@@ -27,7 +27,7 @@ export default async (option: IVotingCreateOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`No URL mode: ${mijinUrl}`)
     repo = undefined

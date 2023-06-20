@@ -11,6 +11,7 @@ program
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File')
   .option('-a, --address <privateKey>', 'Specify the input of Address')
   .option('-s, --service', 'Specify the input Service Mode', false)
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(account)
 
 export default program

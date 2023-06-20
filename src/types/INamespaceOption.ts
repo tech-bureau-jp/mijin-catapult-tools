@@ -8,10 +8,12 @@ export interface INamespaceCreateOption {
   address?: string
   readfile?: string
   privatekey?: string
+  bod: boolean
 }
 
 export interface INamespaceInfoOption {
   url?: string
   readfile?: string
   namespaceId?: string
+  bod: boolean
 }

@@ -5,12 +5,14 @@ export interface IVotingCreateOption {
   endepoch?: string
   savedir: string
   privatekey?: string
+  bod: boolean
 }
 
 export interface IVotingInfoOption {
   url?: string
   readfile?: string
   savedir: string
+  bod: boolean
 }
 
 export interface IVotingUpdateOption {
@@ -20,4 +22,5 @@ export interface IVotingUpdateOption {
   endepoch: string
   savedir: string
   privatekey?: string
+  bod: boolean
 }

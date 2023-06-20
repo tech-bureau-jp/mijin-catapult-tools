@@ -9,7 +9,7 @@ import NamespaceServices from '../../service/NamespaceServices'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: INamespaceCreateOption) => {
-  const { owner, url, readfile, name, duration, privatekey } = option
+  const { owner, url, readfile, name, duration, privatekey, bod } = option
 
   let configFile
 
@@ -28,7 +28,7 @@ export default async (option: INamespaceCreateOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return

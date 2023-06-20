@@ -9,7 +9,7 @@ import CertificateServices from '../../service/CertificateServices'
 const logger = LoggerFactory.getLogger()
 
 export default async (option: IAccountGenerateOption) => {
-  const { url, nodename, readfile, writefile, certsdir, privatekey, service } = option
+  const { url, nodename, readfile, writefile, certsdir, privatekey, service, bod } = option
 
   let configFile
 
@@ -28,7 +28,7 @@ export default async (option: IAccountGenerateOption) => {
 
   try {
     repo = new RepositoryFactory(mijinUrl)
-    await repo.init()
+    await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
     return

@@ -11,6 +11,7 @@ program
   .option('-a, --address <address>', 'Specify the input of Address')
   .option('-r, --readfile <config.json>', 'Specify the input of Read Config File')
   .option('-p, --privatekey <privateKey>', 'Specify the input of Mosaic Owner Account Private Key')
+  .option('-b, --bod', 'Specify the input of mijin BOD mode(use Cookie)', false)
   .action(linkAddress)
 
 export default program
