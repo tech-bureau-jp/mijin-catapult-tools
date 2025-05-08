@@ -88,6 +88,34 @@ export default class NamespaceServices {
     return mosaicAliasTransaction
   }
 
+  static unLinkMosaic(
+    epoch: number,
+    namespaceId: string,
+    mosaicId: string,
+    networkType: NetworkType,
+    feeMultiplier: number
+  ) {
+    const namespace = this.getNamespaceId(namespaceId)
+    if (!namespace) {
+      return null
+    }
+    let mosaic: MosaicId | null = null
+    try {
+      mosaic = new MosaicId(mosaicId)
+    } catch {}
+    if (!mosaic) {
+      return null
+    }
+    const mosaicAliasTransaction = AliasTransaction.createForMosaic(
+      Deadline.create(epoch),
+      AliasAction.Unlink,
+      namespace,
+      mosaic,
+      networkType
+    ).setMaxFee(feeMultiplier) as AliasTransaction
+    return mosaicAliasTransaction
+  }
+
   static linkAddress(
     epoch: number,
     namespaceId: string,
@@ -106,6 +134,31 @@ export default class NamespaceServices {
     const addressAliasTransaction = AliasTransaction.createForAddress(
       Deadline.create(epoch),
       AliasAction.Link,
+      namespace,
+      addressObj,
+      networkType
+    ).setMaxFee(feeMultiplier)
+    return addressAliasTransaction
+  }
+
+  static unLinkAddress(
+    epoch: number,
+    namespaceId: string,
+    address: string,
+    networkType: NetworkType,
+    feeMultiplier: number
+  ) {
+    const namespace = this.getNamespaceId(namespaceId)
+    if (!namespace) {
+      return null
+    }
+    if (!Address.isValidRawAddress(address)) {
+      return null
+    }
+    const addressObj = Address.createFromRawAddress(address)
+    const addressAliasTransaction = AliasTransaction.createForAddress(
+      Deadline.create(epoch),
+      AliasAction.Unlink,
       namespace,
       addressObj,
       networkType

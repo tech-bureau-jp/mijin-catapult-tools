@@ -87,6 +87,22 @@ describe('start namespace test', () => {
     )
     expect(mosaicLink).toBeDefined()
   })
+
+  it('Create mosaic unlink function', () => {
+    const mosaicLink = NamespaceServices.unLinkMosaic(epoch, namespaceRawId, mosaicRawId, networkType, minFeeMultiplier)
+    expect(mosaicLink).toBeDefined()
+  })
+  it('Create account unlink function', () => {
+    const mosaicLink = NamespaceServices.unLinkAddress(
+      epoch,
+      namespaceRawId,
+      config.workAccount.address,
+      networkType,
+      minFeeMultiplier
+    )
+    expect(mosaicLink).toBeDefined()
+  })
+
   it('Get Namespace Id function', () => {
     const namespace = NamespaceServices.getNamespaceId(rootNamespaceName)
     expect(namespace?.fullName).toBe(rootNamespaceName)
