@@ -78,6 +78,7 @@ Options:
   -a, --address <privateKey>      Specify the input of Address
   -m, --message <message>         Specify the input of Transaction Message(Plain Only)
   -s, --service                   Specify the input Service Mode (default: false)
+  -b, --bod                       Specify the input of mijin BOD mode(use Cookie) (default: false)
   -h, --help                      display help for command
 ```
 
@@ -394,7 +395,7 @@ $ mijin-catapult-tools account info -r config.json -t other -a MAVCWTMXHTWG5H63M
 ### 01. balance Account to work Account Currency 100.000000
 
 ```bash
-$ mijin-catapult-tools transaction transfer -f balance -d work -a 100
+$ mijin-catapult-tools transaction transfer -f balance -d work -a 100 -b
 
 2023-01-14T02:04:54.801Z [info] : mijin URL: http://localhost:3000
 2023-01-14T02:04:54.801Z [info] : Network: 96
@@ -430,7 +431,7 @@ $ mijin-catapult-tools account generate -r config.json
 balance Account to New Generate Account
 
 ```bash
-$ mijin-catapult-tools transaction transfer -f balance -d MDRVLLZHSVAZXS67WBWLHXBJDYFB26E6BYUMYGY -a 100
+$ mijin-catapult-tools transaction transfer -f balance -d MDRVLLZHSVAZXS67WBWLHXBJDYFB26E6BYUMYGY -a 100 -b
 
 2023-01-14T02:06:37.237Z [info] : mijin URL: http://localhost:3000
 2023-01-14T02:06:37.238Z [info] : Network: 96
@@ -447,7 +448,7 @@ $ mijin-catapult-tools transaction transfer -f balance -d MDRVLLZHSVAZXS67WBWLHX
 New Generate Account info
 
 ```bash
-$ mijin-catapult-tools account info -r config.json -t other -a MDRVLLZHSVAZXS67WBWLHXBJDYFB26E6BYUMYGY
+$ mijin-catapult-tools account info -r config.json -t other -a MDRVLLZHSVAZXS67WBWLHXBJDYFB26E6BYUMYGY -b
 2023-01-14T02:07:41.456Z [info] : mijin URL: http://localhost:3000
 2023-01-14T02:07:41.457Z [info] : Network: 96
 2023-01-14T02:07:41.457Z [info] : Mosaic Currency Id: 268CF9B2D33FBD22
@@ -496,6 +497,7 @@ Options:
   --revokable <revokable>                            Specify the input of Mosaic Flags option Revokable (default: false)
   -r, --readfile <config.json>                       Specify the input of Read Config File
   -p, --privatekey <privateKey>                      Specify the input of Mosaic Owener Account Private Key
+  -b, --bod                       Specify the input of mijin BOD mode(use Cookie) (default: false)
   -h, --help                                         display help for command
 ```
 
@@ -505,7 +507,7 @@ If you need to pay a fee, balance Account to work Account
 Trasanction announcement fees are set automatically(min Multiplier).
 
 ```bash
-$ mijin-catapult-tools transaction transfer -f balance -d work -a 1000
+$ mijin-catapult-tools transaction transfer -f balance -d work -a 1000 -b
 
 2023-01-14T02:08:28.776Z [info] : mijin URL: http://localhost:3000
 2023-01-14T02:08:28.776Z [info] : Network: 96
@@ -522,7 +524,7 @@ $ mijin-catapult-tools transaction transfer -f balance -d work -a 1000
 Create Mosaic
 
 ```bash
-$ mijin-catapult-tools transaction mosaic create -r config.json -o work
+$ mijin-catapult-tools transaction mosaic create -r config.json -o work -b
 
 2023-01-14T02:09:46.550Z [info] : mijin URL: http://localhost:3000
 2023-01-14T02:09:46.550Z [info] : Network: 96
@@ -563,7 +565,7 @@ Rrestrictable: true
 Revokable: true
 
 ```bash
-$ mijin-catapult-tools transaction mosaic create -r config.json -o work -s 1000 -d 6 --revokable true
+$ mijin-catapult-tools transaction mosaic create -r config.json -o work -s 1000 -d 6 --revokable true -b
 2023-01-16T06:28:31.289Z [info] : mijin URL: http://localhost:3000
 2023-01-16T06:28:31.289Z [info] : Network: 96
 2023-01-16T06:28:31.289Z [info] : Create Mosaic...
@@ -602,11 +604,11 @@ Commands:
 ### Namespace Example Commands
 
 ``` bash
-$ mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000
-$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub -pn test
-$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub2 -pn test
-$ mijin-catapult-tools transaction namespace link-mosaic -r config.json -o work -n test.sub -m 287CD558128F6C53
-$ mijin-catapult-tools transaction namespace link-address -r config.json -o work -n test.sub2 -a MDLEKG5MKKAPFBM3XWZKYQEDYRJO67MUJXFDP6I
+mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000 -b
+$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub -pn test -b
+$ mijin-catapult-tools transaction namespace create-sub -r config.json -o work -n sub2 -pn test -b
+$ mijin-catapult-tools transaction namespace link-mosaic -r config.json -o work -n test.sub -m 287CD558128F6C53 -b
+$ mijin-catapult-tools transaction namespace link-address -r config.json -o work -n test.sub2 -a MDLEKG5MKKAPFBM3XWZKYQEDYRJO67MUJXFDP6I -b
 $ mijin-catapult-tools transaction namespace info -r config.json -n test
 ```
 
@@ -616,7 +618,7 @@ Namespace Name: test
 Duration: 1000
 
 ```bash
-$ mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000
+$ mijin-catapult-tools transaction namespace create-root -r config.json -o work -n test -d 1000 -b
 2023-03-10T06:11:01.298Z [info] : mijin URL: http://localhost:3000
 2023-03-10T06:11:01.299Z [info] : Network: 96
 2023-03-10T06:11:01.300Z [info] : Create Root Namespace...
@@ -636,7 +638,7 @@ $ mijin-catapult-tools transaction namespace create-root -r config.json -o work 
 Namespace Name: test
 
 ```bash
-$ mijin-catapult-tools transaction namespace info -r config.json -n test
+$ mijin-catapult-tools transaction namespace info -r config.json -n test -b
 2023-03-10T06:13:34.668Z [info] : mijin URL: http://localhost:3000
 2023-03-10T06:13:34.669Z [info] : Network: 96
 2023-03-10T06:13:34.670Z [info] : Namespace Id: test
