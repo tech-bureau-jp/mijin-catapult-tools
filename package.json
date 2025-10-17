@@ -1,6 +1,6 @@
 {
   "name": "@tech-bureau/mijin-catapult-tools",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "This tool is for easy operation of mijin Catapult(v.2)",
   "private": false,
   "main": "dist/main.js",
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/tech-bureau-jp/mijin-catapult-tools#readme",
   "dependencies": {
     "@noble/ed25519": "^1.7.1",
-    "@tech-bureau/symbol-sdk": "2.0.3-20230601",
+    "@tech-bureau/symbol-sdk": "2.0.6",
     "commander": "9.5.0",
     "config": "^3.3.4",
     "fetch-cookie": "^2.1.0",

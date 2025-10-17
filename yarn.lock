@@ -601,10 +601,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@tech-bureau/symbol-sdk@2.0.3-20230601":
-  version "2.0.3-20230601"
-  resolved "https://registry.npmjs.org/@tech-bureau/symbol-sdk/-/symbol-sdk-2.0.3-20230601.tgz#dd9c82c7fd3bd540f32171e2da3bee2475002590"
-  integrity sha512-90wUpONXuYA63TJHnNNgM9OCxKCnDhRlCeqa7I3PC7yxGMHdjBsV1bZ6Nqds5l1jbLgOxbCtPqphPuwrHGbCCg==
+"@tech-bureau/symbol-sdk@2.0.6":
+  version "2.0.6"
+  resolved "https://registry.npmjs.org/@tech-bureau/symbol-sdk/-/symbol-sdk-2.0.6.tgz#92d83bb5a0ff5cf97934cc3cfe90552e17ba1d0d"
+  integrity sha512-2vTlxL4+tibITia928lOPY4SgjD3p7WuaChfMD8/CLaqTOuxdtg7H66WyqnJc3Zu2MvCTukv1c1Y8q5eTDZJrg==
   dependencies:
     "@js-joda/core" "^3.2.0"
     catbuffer-typescript "^1.0.2"
