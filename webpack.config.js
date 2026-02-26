@@ -8,6 +8,9 @@ module.exports = {
     __dirname: false,
     __filename: false,
   },
+  externals: {
+    undici: 'commonjs undici',
+  },
   module: {
     rules: [
       {

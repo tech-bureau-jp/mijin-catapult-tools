@@ -10,6 +10,7 @@ import {
 import { firstValueFrom } from 'rxjs'
 import fetchCookie from 'fetch-cookie'
 import { CookieJar } from 'tough-cookie'
+import { ProxyAgent } from 'undici'
 
 let networkType: NetworkType
 let currency: NetworkCurrencies
@@ -24,13 +25,16 @@ export default class RepositoryFactory {
   constructor(public url: string) {}
 
   async init(cookieFlag?: boolean) {
+    const proxyUrl = process.env.HTTP_PROXY || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.https_proxy
+    const dispatcher = proxyUrl ? new ProxyAgent(proxyUrl) : undefined
+    const customFetch = (url: any, init?: any) => fetch(url, { ...init, dispatcher })
+
     if (cookieFlag) {
       const cookieJar = new CookieJar()
-      const fetchCookieJar = fetchCookie(fetch, cookieJar)
+      const fetchCookieJar = fetchCookie(customFetch, cookieJar)
       await fetchCookieJar(this.url)
       const cookie = await cookieJar.getCookieString(this.url)
 
-      // Websocket Option(mijin custom sdk)
       const websocketOptions = {
         headers: { cookie: cookie },
       }
@@ -40,7 +44,7 @@ export default class RepositoryFactory {
         websocketOptions: websocketOptions,
       })
     } else {
-      repo = new RepositoryFactoryHttp(this.url)
+      repo = new RepositoryFactoryHttp(this.url, { fetchApi: customFetch })
     }
 
     networkType = await firstValueFrom(repo.getNetworkType())
