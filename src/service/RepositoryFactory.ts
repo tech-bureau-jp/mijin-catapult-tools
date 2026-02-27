@@ -10,6 +10,7 @@ import {
 import { firstValueFrom } from 'rxjs'
 import fetchCookie from 'fetch-cookie'
 import { CookieJar } from 'tough-cookie'
+import { ProxyAgent } from 'undici'
 
 let networkType: NetworkType
 let currency: NetworkCurrencies
@@ -24,15 +25,35 @@ export default class RepositoryFactory {
   constructor(public url: string) {}
 
   async init(cookieFlag?: boolean) {
+    const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy
+    const hasProxy = proxyUrl && proxyUrl.trim()
+    
+    const dispatcher = hasProxy ? new ProxyAgent({ uri: proxyUrl, requestTls: { rejectUnauthorized: false } }) : undefined
+    
+    const customFetch = hasProxy
+      ? (url: any, init?: any) => {
+          const headers = { ...init?.headers }
+          delete headers['x-forwarded-for']
+          delete headers['X-Forwarded-For']
+          return fetch(url, { ...init, headers, dispatcher })
+        }
+      : undefined
+
+    const websocketInjected = hasProxy ? {
+      agent: dispatcher,
+      headers: {}
+    } : undefined
+
     if (cookieFlag) {
       const cookieJar = new CookieJar()
-      const fetchCookieJar = fetchCookie(fetch, cookieJar)
+      const baseFetch = customFetch || fetch
+      const fetchCookieJar = fetchCookie(baseFetch, cookieJar)
       await fetchCookieJar(this.url)
       const cookie = await cookieJar.getCookieString(this.url)
 
-      // Websocket Option(mijin custom sdk)
       const websocketOptions = {
         headers: { cookie: cookie },
+        ...(websocketInjected || {})
       }
 
       repo = new RepositoryFactoryHttp(this.url, {
@@ -40,7 +61,10 @@ export default class RepositoryFactory {
         websocketOptions: websocketOptions,
       })
     } else {
-      repo = new RepositoryFactoryHttp(this.url)
+      repo = new RepositoryFactoryHttp(this.url, customFetch ? { 
+        fetchApi: customFetch,
+        websocketInjected: websocketInjected 
+      } : undefined)
     }
 
     networkType = await firstValueFrom(repo.getNetworkType())

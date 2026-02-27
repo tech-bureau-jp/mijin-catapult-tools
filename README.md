@@ -60,6 +60,26 @@ yarn global add  @tech-bureau/mijin-catapult-tools
 echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
 
+## Using Proxy
+
+If you need to access mijin Catapult through an HTTP/HTTPS proxy, set the following environment variables:
+
+```bash
+# Simple: Set either HTTP_PROXY or HTTPS_PROXY
+export HTTPS_PROXY=http://proxy.example.com:8080
+
+# Example usage with proxy
+HTTPS_PROXY=http://localhost:3128 mijin-catapult-tools account info -r config.json
+```
+
+The tool supports the following proxy environment variables:
+- `HTTPS_PROXY` / `https_proxy` - Proxy for HTTPS requests
+- `HTTP_PROXY` / `http_proxy` - Proxy for HTTP requests
+- `GLOBAL_AGENT_HTTP_PROXY` - Proxy for SDK requests (auto-set from HTTP_PROXY/HTTPS_PROXY if not specified)
+- `NO_PROXY` / `no_proxy` - Comma-separated list of hosts to exclude from proxying
+
+Note: The tool automatically sets `GLOBAL_AGENT_HTTP_PROXY` from `HTTP_PROXY` or `HTTPS_PROXY` if not already set, so you only need to set one proxy variable.
+
 ## Account Generate
 
 ```bash
