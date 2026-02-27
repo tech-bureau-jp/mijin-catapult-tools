@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-// Auto-set GLOBAL_AGENT_HTTP_PROXY if not set but HTTP_PROXY or HTTPS_PROXY is set
-if (!process.env.GLOBAL_AGENT_HTTP_PROXY) {
-  const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy
-  if (proxyUrl) {
+// Check if proxy is configured
+const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy
+const hasProxy = proxyUrl && proxyUrl.trim()
+
+if (hasProxy) {
+  // Auto-set GLOBAL_AGENT_HTTP_PROXY for global-agent
+  if (!process.env.GLOBAL_AGENT_HTTP_PROXY) {
     process.env.GLOBAL_AGENT_HTTP_PROXY = proxyUrl
   }
-}
-
-// Enable global-agent for proxy support
-if (process.env.HTTP_PROXY || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.https_proxy) {
+  // Enable global-agent for proxy support
   require('global-agent/bootstrap')
 }
 

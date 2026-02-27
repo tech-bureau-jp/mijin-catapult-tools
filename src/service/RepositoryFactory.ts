@@ -25,26 +25,29 @@ export default class RepositoryFactory {
   constructor(public url: string) {}
 
   async init(cookieFlag?: boolean) {
-    const proxyUrl = process.env.HTTP_PROXY || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.https_proxy
-    const dispatcher = proxyUrl ? new ProxyAgent({ uri: proxyUrl, requestTls: { rejectUnauthorized: false } }) : undefined
+    const proxyUrl = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy
+    const hasProxy = proxyUrl && proxyUrl.trim()
     
-    const customFetch = dispatcher
+    const dispatcher = hasProxy ? new ProxyAgent({ uri: proxyUrl, requestTls: { rejectUnauthorized: false } }) : undefined
+    
+    const customFetch = hasProxy
       ? (url: any, init?: any) => {
           const headers = { ...init?.headers }
           delete headers['x-forwarded-for']
           delete headers['X-Forwarded-For']
           return fetch(url, { ...init, headers, dispatcher })
         }
-      : fetch
+      : undefined
 
-    const websocketInjected = proxyUrl ? {
+    const websocketInjected = hasProxy ? {
       agent: dispatcher,
       headers: {}
     } : undefined
 
     if (cookieFlag) {
       const cookieJar = new CookieJar()
-      const fetchCookieJar = fetchCookie(customFetch, cookieJar)
+      const baseFetch = customFetch || fetch
+      const fetchCookieJar = fetchCookie(baseFetch, cookieJar)
       await fetchCookieJar(this.url)
       const cookie = await cookieJar.getCookieString(this.url)
 
@@ -58,7 +61,7 @@ export default class RepositoryFactory {
         websocketOptions: websocketOptions,
       })
     } else {
-      repo = new RepositoryFactoryHttp(this.url, dispatcher ? { 
+      repo = new RepositoryFactoryHttp(this.url, customFetch ? { 
         fetchApi: customFetch,
         websocketInjected: websocketInjected 
       } : undefined)

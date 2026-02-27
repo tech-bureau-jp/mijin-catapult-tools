@@ -34,6 +34,7 @@ export default async (option: ITransactionStatusOption) => {
     await repo.init(bod)
   } catch (error) {
     logger.error(`Please specify a valid URL: ${mijinUrl}`)
+    logger.error(`Error details: ${error}`)
     return
   }
 
