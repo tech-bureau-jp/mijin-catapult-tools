@@ -26,8 +26,21 @@ export default class RepositoryFactory {
 
   async init(cookieFlag?: boolean) {
     const proxyUrl = process.env.HTTP_PROXY || process.env.HTTPS_PROXY || process.env.http_proxy || process.env.https_proxy
-    const dispatcher = proxyUrl ? new ProxyAgent(proxyUrl) : undefined
-    const customFetch = (url: any, init?: any) => fetch(url, { ...init, dispatcher })
+    const dispatcher = proxyUrl ? new ProxyAgent({ uri: proxyUrl, requestTls: { rejectUnauthorized: false } }) : undefined
+    
+    const customFetch = dispatcher
+      ? (url: any, init?: any) => {
+          const headers = { ...init?.headers }
+          delete headers['x-forwarded-for']
+          delete headers['X-Forwarded-For']
+          return fetch(url, { ...init, headers, dispatcher })
+        }
+      : fetch
+
+    const websocketInjected = proxyUrl ? {
+      agent: dispatcher,
+      headers: {}
+    } : undefined
 
     if (cookieFlag) {
       const cookieJar = new CookieJar()
@@ -37,6 +50,7 @@ export default class RepositoryFactory {
 
       const websocketOptions = {
         headers: { cookie: cookie },
+        ...(websocketInjected || {})
       }
 
       repo = new RepositoryFactoryHttp(this.url, {
@@ -44,7 +58,10 @@ export default class RepositoryFactory {
         websocketOptions: websocketOptions,
       })
     } else {
-      repo = new RepositoryFactoryHttp(this.url, { fetchApi: customFetch })
+      repo = new RepositoryFactoryHttp(this.url, dispatcher ? { 
+        fetchApi: customFetch,
+        websocketInjected: websocketInjected 
+      } : undefined)
     }
 
     networkType = await firstValueFrom(repo.getNetworkType())

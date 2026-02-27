@@ -36,6 +36,7 @@
     "commander": "9.5.0",
     "config": "^3.3.4",
     "fetch-cookie": "^2.1.0",
+    "global-agent": "^3.0.0",
     "js-sha3": "git+https://github.com/Propine/js-sha3.git",
     "node-forge": "git+https://github.com/dugrema/forge.git#ed25519",
     "tough-cookie": "^5.0.0",
