@@ -792,11 +792,14 @@ The next voting key can be linked while the current one is still in use, so the 
    $ mijin-catapult-tools votingkey link -r config.json -d voting
    ```
 
-   Check that the voting keys are linked with `votingkey info` and the REST API (`/accounts/<address>`, `supplementalPublicKeys.voting`).
+   Check that the new voting key is linked with the REST API (`/accounts/<address>` of the main Account, `supplementalPublicKeys.voting`).
+   `votingkey info` only shows the start and end epochs of the local files, and does not check the chain.
 
 3. Put the new file into the voting key directory of the node with the same file name.
    The node reads `private_key_tree1.dat`, `private_key_tree2.dat`, ... in order, and reads the next file when the current one is used up, so do not leave a gap in the numbers.
    Keep the owner and the permissions the same as the existing files.
+   If the file is put before the current voting key expires, the node does not need to be restarted.
+   If the current voting key has already expired, the node does not read the new file until it is restarted, so restart the node after putting the file.
 
 Up to `maxVotingKeysPerAccount` (3) voting keys can be linked to one account.
 
