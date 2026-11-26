@@ -1241,9 +1241,9 @@ caniuse-lite@^1.0.30001400:
   integrity sha512-aFO1r+g6R7TW+PNQxKzjITwLOyDhVRLjW0LcwS/HCZGUUKTGNp9+IwLC4xyDSZBygVL/mxaFR3HIV6wEKQuSzw==
 
 catbuffer-typescript@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/catbuffer-typescript/-/catbuffer-typescript-1.0.2.tgz#06e60afedc9df790a2b85b23059f47d693889ba0"
-  integrity sha512-wFcpz5A9H1jqVyfaTv596V3X19b1iBfz25CPAesQjtFDVq2zY0G2HvoYldggqlkmqNbkFaz5TICkKRsWgn9dyQ==
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/catbuffer-typescript/-/catbuffer-typescript-1.0.3.tgz#8b11f2d2cead484a56f49c9fbf087077de66891e"
+  integrity sha512-Ah+Sew7lu+ghwOQiT4pmoKroHDIMc+Ucd2oJjQOH7/w+TTVT2lmqqPzSj8GQOmpdVh2nlto+f7WjJZRmrVlD6Q==
 
 chalk@^2.0.0:
   version "2.4.2"
