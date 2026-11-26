@@ -158,12 +158,18 @@ export default class TransactionServices {
     return VrfKeyLinkTransaction.create(Deadline.create(epoch), linkPublickey, LinkAction.Link, networkType)
   }
 
-  static createVotingKey(epoch: number, linkPublickey: string, networkType: NetworkType): VotingKeyLinkTransaction {
+  static createVotingKey(
+    epoch: number,
+    linkPublickey: string,
+    startEpoch: number,
+    endEpoch: number,
+    networkType: NetworkType
+  ): VotingKeyLinkTransaction {
     return VotingKeyLinkTransaction.create(
       Deadline.create(epoch),
       linkPublickey,
-      1,
-      360,
+      startEpoch,
+      endEpoch,
       LinkAction.Link,
       networkType,
       1

@@ -23,6 +23,7 @@ This tool is for easy operation of mijin Catapult(v.2)
   * Create
   * Info
   * Update
+  * Link
 
 ## Usage
 
@@ -38,7 +39,7 @@ Options:
 
 Commands:
   account         Account Info or Generate
-  votingkey       Votingkey Create or Info or Update
+  votingkey       Votingkey Create or Info or Update or Link
   transaction     Transaction Announce or Info
   help [command]  display help for command
 ```
@@ -735,6 +736,72 @@ $ mijin-catapult-tools votingkey update -r config.json -d voting
 2023-01-14T02:29:26.310Z [info] : blockGenerationTargetTime: 15
 2023-01-14T02:29:36.774Z [info] : Voting Key file Create: SUCCESS voting/private_key_tree2.dat
 ```
+
+## Link Votingkey
+
+Link the latest Votingkey file in the directory (the file with the largest start epoch) to the main Account, and announce a VotingKeyLink transaction signed by the main Account.
+The main Account is `mainAccount` in the config file, or the private key given with `-p`.
+
+Before announcing, the linked voting keys of the main Account are checked, and the transaction is not announced when:
+
+* the same voting key (public key, start epoch and end epoch) is already linked
+* the start epoch is not after the end epoch of the linked voting keys
+* the maximum number of voting keys (`maxVotingKeysPerAccount`, 3 by default) is already linked
+* the lifetime is out of the range of `minVotingKeyLifetime` - `maxVotingKeyLifetime` (72 - 26280 epochs by default)
+
+```bash
+$ mijin-catapult-tools votingkey link -h
+Usage: mijin-catapult-tools votingkey link [options]
+
+Link the latest Votingkey file to the main Account and Announce Transaction
+
+Options:
+  -u, --url <mijinCatapultURL>   Specify the input of mijin URL
+  -r, --readfile <config.json>   Specify the input of Read Config File
+  -d, --savedir <dir>            Specify the input of Voting Key Directory
+                                 (default: "current")
+  -p, --privatekey <privateKey>  Specify the input of Main Account Private Key
+  -b, --bod                      Specify the input of mijin BOD mode(use
+                                 Cookie) (default: false)
+  -h, --help                     display help for command
+```
+
+```bash
+$ mijin-catapult-tools votingkey link -r config.json -d voting
+```
+
+## Renew Votingkey
+
+A voting key can be used for up to `maxVotingKeyLifetime` (26280) epochs, and one epoch is `votingSetGrouping` blocks.
+When the voting keys of a voting node expire, the node stops voting, and finalization stops when there are not enough voters.
+Renew the voting key of each voting node before it expires.
+
+The next voting key can be linked while the current one is still in use, so the renewal can be done well in advance.
+
+1. Copy the voting key directory of the node (all `private_key_tree<N>.dat` files) to a working directory, and create the next file.
+   The voting private key is `keylink.voting` in the config file, or the private key given with `-p`.
+
+   ```bash
+   $ mijin-catapult-tools votingkey update -r config.json -d voting
+   ```
+
+2. Link the new voting key to the main Account.
+   Note that `-p` of `link` is the private key of the main Account, not the voting private key.
+
+   ```bash
+   $ mijin-catapult-tools votingkey link -r config.json -d voting
+   ```
+
+   Check that the new voting key is linked with the REST API (`/accounts/<address>` of the main Account, `supplementalPublicKeys.voting`).
+   `votingkey info` only shows the start and end epochs of the local files, and does not check the chain.
+
+3. Put the new file into the voting key directory of the node with the same file name.
+   The node reads `private_key_tree1.dat`, `private_key_tree2.dat`, ... in order, and reads the next file when the current one is used up, so do not leave a gap in the numbers.
+   Keep the owner and the permissions the same as the existing files.
+   If the file is put before the current voting key expires, the node does not need to be restarted.
+   If the current voting key has already expired, the node does not read the new file until it is restarted, so restart the node after putting the file.
+
+Up to `maxVotingKeysPerAccount` (3) voting keys can be linked to one account.
 
 ## Thanks
 
