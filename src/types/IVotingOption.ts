@@ -24,3 +24,11 @@ export interface IVotingUpdateOption {
   privatekey?: string
   bod: boolean
 }
+
+export interface IVotingLinkOption {
+  url?: string
+  readfile?: string
+  savedir: string
+  privatekey?: string
+  bod: boolean
+}
